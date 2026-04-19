@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+*.egg-info/
+Outputs/
+dist/
+tmp_skill_guide.pdf
+tmp_skill_guide.txt
+info.md

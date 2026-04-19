@@ -1,0 +1,35 @@
+name: Package Claude Skill
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build skill zip
+        run: |
+          chmod +x scripts/package-skill.sh
+          ./scripts/package-skill.sh
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: youtube-downloader-skill
+          path: dist/youtube-downloader-skill.zip
+
+      - name: Attach zip to GitHub release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/youtube-downloader-skill.zip
